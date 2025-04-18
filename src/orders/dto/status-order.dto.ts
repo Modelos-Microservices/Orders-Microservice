@@ -1,4 +1,4 @@
-import { OrderStatus } from "generated/prisma";
+import { OrderStatus } from "@prisma/client";
 import { OrderStatusList } from "../enum/order.enum";
 import { IsEnum, IsNotEmpty, IsUUID } from "class-validator";
 
