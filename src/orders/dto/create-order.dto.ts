@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, ValidateNested } from "class-validator";
+import { ArrayMinSize, IsArray, IsDefined, IsUUID, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { OrderItemDto } from "./order-item.dto";
 
@@ -8,6 +8,11 @@ export class CreateOrderDto {
     @ValidateNested({ each: true})
     @Type( () => OrderItemDto)
     items: OrderItemDto[]
+
+    @IsUUID()
+    @IsDefined()
+    user_id :string
+    
 
 }
 

@@ -6,6 +6,10 @@ import { OrderPaginationDto } from './dto/order-pagination.dto';
 import { StatusOrderDto } from './dto/status-order.dto';
 import { PaidOrderDto } from './dto/paid-order.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { CreateOrderItemDto } from './dto/create-order-item.dto';
+import { consumerOpts } from 'nats';
+import { DeleteOrderItemDto } from './dto/delete-order-item.dto';
+import { UpdateOrderItemDto } from './dto/update-order-item.dto';
 
 
 @Controller()
@@ -49,5 +53,30 @@ export class OrdersController {
     return this.ordersService.paidOrder(paidOrderDto)
   }
 
+  @MessagePattern({cmd: 'addOneProduct'})
+  AddOneProduct(@Payload() createOrderItemDto: CreateOrderItemDto){
+    return this.ordersService.addProduct(createOrderItemDto)
+  }
+
+
+  @MessagePattern({cmd: 'payOrder'})
+  PayOrder(@Payload() user_id: string){
+    return this.ordersService.PayOrder(user_id)
+  }
+
+  @MessagePattern({cmd: 'deleteOrderItem'})
+  deleteOrderItem(@Payload() deleteOrderItemDto: DeleteOrderItemDto){
+    return this.ordersService.removeProduct(deleteOrderItemDto)
+  }
+
+  @MessagePattern({cmd: 'updateOrderItem'})
+  updateOrderItem(@Payload() updateOrderItemDto: UpdateOrderItemDto){
+    return this.ordersService.updateProduct(updateOrderItemDto)
+  }
+
+  @MessagePattern({cmd: 'getUserCart'})
+  getUserCart(@Payload() id: string){
+    return this.ordersService.getUserCart(id)
+  }
 
 }

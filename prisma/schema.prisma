@@ -25,6 +25,8 @@ model Order {
   total_amount Float
   totalItems   Int
 
+  user_id String   
+
   status         OrderStatus @default(PENDING)
   paid           Boolean     @default(false)
   paidAt         DateTime?
@@ -33,7 +35,7 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  OrderItem OrderItem[]
+  OrderItem   OrderItem[]
   OrderReceip OrderReceip?
 }
 
@@ -47,10 +49,9 @@ model OrderItem {
   orderId String?
 }
 
-
 model OrderReceip {
-  id String @id @default(uuid())
-  Order Order @relation(fields: [orderId], references: [id]) 
+  id      String @id @default(uuid())
+  Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique //se establece unico porque es una relación uno a uno 
 
   receipUrl String
