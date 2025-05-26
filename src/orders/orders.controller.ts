@@ -37,6 +37,12 @@ export class OrdersController {
     return this.ordersService.findOne(id);
   }
 
+
+  @MessagePattern({ cmd: 'findOne' })
+  findOneOrder(@Payload() id: string) {
+    return this.ordersService.findOndeOrder(id);
+  }
+
   @MessagePattern({ cmd: 'changeOrderStatus' })
   update(@Payload() StatusOrderDto: StatusOrderDto) {
     return this.ordersService.changeOrderStatus(StatusOrderDto);

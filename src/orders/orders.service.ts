@@ -118,10 +118,19 @@ export class OrdersService {
     }
   }
 
+
+  async findOndeOrder(id:string){
+    const order = await this.prisma.order.findUnique({ where: { id } })
+    if (!order) {
+      throw new RpcException({ status: HttpStatus.NOT_FOUND, message: `Order with id:${id} not found` })
+    }
+    return order
+  }
+
   async findOne(id: string) {
     const order = await this.prisma.order.findUnique({ where: { id } })
     if (!order) {
-      throw new RpcException({ status: HttpStatus.NOT_FOUND, message: `Product with id:${id} not found` })
+      throw new RpcException({ status: HttpStatus.NOT_FOUND, message: `Order with id:${id} not found` })
     }
     const orderItems = await this.prisma.orderItem.findMany({ where: { orderId: order.id } })
     const ids = orderItems.map(item => { return item.productId })
